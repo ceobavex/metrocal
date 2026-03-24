@@ -22,7 +22,7 @@ include '../components/header.php';
                     </p>
                 </div>
                 <div class="about-image">
-                    <img src="/img/frente-empresa-placeholder.jpg" alt="Fachada da Metrocal">
+                    <img src="<?php echo BASE_URL; ?>img/frente-empresa-placeholder.jpg" alt="Fachada da Metrocal">
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@ include '../components/header.php';
                     </p>
                 </div>
                 <div class="about-image">
-                    <img src="/img/laboratorio-detalhe.jpg" alt="Laboratório de alta performance da Metrocal">
+                    <img src="<?php echo BASE_URL; ?>img/laboratorio-detalhe.jpg" alt="Laboratório de alta performance da Metrocal">
                 </div>
             </div>
         </div>

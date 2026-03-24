@@ -47,7 +47,7 @@ include '../../components/header.php';
                 Entre em contato com nossa equipe e solicite um orçamento para a qualificação da sua capela de fluxo laminar.
             </p>
             <br>
-            <a href="/metrocal/pages/orcamento.php" class="btn btn-primary">Solicitar Orçamento Agora</a>
+            <a href="<?php echo BASE_URL; ?>pages/orcamento.php" class="btn btn-primary">Solicitar Orçamento Agora</a>
         </div>
     </section>
 </main>

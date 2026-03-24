@@ -3,45 +3,6 @@
 include '../components/header.php'; 
 ?>
 
-<style>
-    /* Estilos específicos para a página hub de serviços */
-    .service-hub-section {
-        padding-bottom: 60px;
-    }
-    .category-title {
-        font-size: 2.2rem;
-        color: var(--azul-escuro);
-        margin-bottom: 30px;
-        padding-bottom: 10px;
-        border-bottom: 3px solid var(--azul-principal);
-    }
-    .service-hub-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 25px;
-    }
-    .service-hub-card {
-        display: block;
-        background: var(--branco);
-        padding: 25px;
-        border-radius: 10px;
-        box-shadow: var(--sombra);
-        text-decoration: none;
-        color: var(--texto-escuro);
-        transition: all 0.3s ease;
-        border-left: 5px solid var(--azul-principal);
-    }
-    .service-hub-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 102, 204, 0.15);
-        border-left-color: var(--azul-hover);
-    }
-    .service-hub-card h3 {
-        font-size: 1.1rem;
-        color: var(--azul-escuro);
-    }
-</style>
-
 <main>
     <section class="page-header-service">
         <div class="container">

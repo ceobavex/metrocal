@@ -38,7 +38,7 @@ include '../../components/header.php';
                 Fale com nossos especialistas para um orçamento.
             </p>
             <br>
-            <a href="/metrocal/pages/orcamento.php" class="btn btn-primary">Solicitar Orçamento Agora</a>
+            <a href="<?php echo BASE_URL; ?>pages/orcamento.php" class="btn btn-primary">Solicitar Orçamento Agora</a>
         </div>
     </section>
 </main>

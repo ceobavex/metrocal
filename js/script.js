@@ -12,13 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScroll();
     initNumberCounter();
     initPhoneMask();
-
-    // O código de validação do formulário de contato só é relevante na página de contato,
-    // então verificamos se o formulário existe antes de adicionar os listeners.
-    const contactForm = document.getElementById('contatoForm');
-    if (contactForm) {
-        initContactFormValidation(contactForm);
-    }
     
     console.log('%c🚀 Site Metrocal carregado com sucesso!', 'color: #0066CC; font-size: 16px; font-weight: bold;');
     console.log('%c✅ Todas as funcionalidades JavaScript estão ativas', 'color: #28a745; font-size: 14px;');
@@ -212,69 +205,6 @@ function initScrollTopButton() {
     scrollTopBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-}
-
-
-// ==================== VALIDAÇÃO E ENVIO DO FORMULÁRIO DE CONTATO ====================
-function initContactFormValidation(form) {
-    const formMessage = document.getElementById('formMessage');
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const nome = document.getElementById('nome').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const telefone = document.getElementById('telefone').value.trim();
-        const assunto = document.getElementById('assunto').value.trim();
-        const mensagem = document.getElementById('mensagem').value.trim();
-        
-        if (!validarFormulario(nome, email, telefone, assunto, mensagem, formMessage)) {
-            return;
-        }
-        
-        enviarFormulario(form, formMessage);
-    });
-}
-
-function validarFormulario(nome, email, telefone, assunto, mensagem, formMessage) {
-    if (nome.length < 3) {
-        mostrarMensagem('Por favor, insira seu nome completo.', 'error', formMessage);
-        return false;
-    }
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regexEmail.test(email)) {
-        mostrarMensagem('Por favor, insira um e-mail válido.', 'error', formMessage);
-        return false;
-    }
-    if (telefone.length < 10) {
-        mostrarMensagem('Por favor, insira um telefone válido.', 'error', formMessage);
-        return false;
-    }
-    if (assunto.length < 3) {
-        mostrarMensagem('Por favor, insira um assunto válido.', 'error', formMessage);
-        return false;
-    }
-    if (mensagem.length < 10) {
-        mostrarMensagem('Por favor, insira uma mensagem com pelo menos 10 caracteres.', 'error', formMessage);
-        return false;
-    }
-    return true;
-}
-
-function enviarFormulario(form, formMessage) {
-    // Simulação de sucesso. Em um projeto real, aqui iria o código de envio para o backend.
-    mostrarMensagem('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success', formMessage);
-    form.reset();
-}
-
-function mostrarMensagem(texto, tipo, formMessage) {
-    formMessage.textContent = texto;
-    formMessage.className = `form-message ${tipo}`;
-    
-    setTimeout(() => {
-        formMessage.style.display = 'none';
-        formMessage.className = 'form-message';
-    }, 5000);
 }
 
 

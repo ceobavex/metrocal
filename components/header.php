@@ -3,17 +3,21 @@
 // Inclui o arquivo de configuração para ter acesso à BASE_URL
 // MUDANÇA AQUI: Usando um caminho relativo que funciona em qualquer servidor
 require_once(__DIR__ . '/../config.php');
+
+$pageMeta = metrocal_get_page_meta();
+$pageTitle = isset($pageTitle) ? $pageTitle : $pageMeta['title'];
+$pageDescription = isset($pageDescription) ? $pageDescription : $pageMeta['description'];
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Metrocal - Soluções em Calibração e Metrologia">
-    <title>Metrocal - Calibração & Assistência Técnica</title>
+    <meta name="description" content="<?php echo htmlspecialchars($pageDescription, ENT_QUOTES, 'UTF-8'); ?>">
+    <title><?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?></title>
     
-    <link rel="icon" href="<?php echo BASE_URL; ?>img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="<?php echo BASE_URL; ?>img/favicon.png" type="image/png">
+    <link rel="shortcut icon" href="<?php echo BASE_URL; ?>img/favicon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -109,7 +113,7 @@ require_once(__DIR__ . '/../config.php');
                     
                     <li><a href="<?php echo BASE_URL; ?>pages/escopos.php" class="nav-link">Escopos</a></li>
                     <li><a href="<?php echo BASE_URL; ?>pages/orcamento.php" class="nav-link nav-link-cta-secondary">Solicite Seu Orçamento</a></li>
-                    <li><a href="http://totallab.arkmeds.com/usuarios/conectar?next=/" class="nav-link nav-link-cta">Acesse Seu Certificado</a></li>
+                    <li><a href="https://totallab.arkmeds.com/usuarios/conectar?next=/" class="nav-link nav-link-cta" target="_blank" rel="noopener noreferrer">Acesse Seu Certificado</a></li>
                 </ul>
                 
                 <button class="hamburger" id="hamburger" aria-label="Menu">

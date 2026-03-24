@@ -798,29 +798,6 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-.form-message {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: 500;
-    display: none;
-}
-
-.form-message.success {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    display: block;
-}
-
-.form-message.error {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-    display: block;
-}
-
 /* ==================== RODAPÉ ==================== */
 .footer {
     background: var(--azul-escuro);
@@ -1186,6 +1163,191 @@ body {
     text-align: center;
 }
 
+/* ==================== PÁGINA DE SERVIÇOS ==================== */
+.service-hub-section {
+    padding-bottom: 60px;
+}
+
+.service-hub-section .category-title {
+    font-size: 2.2rem;
+    color: var(--azul-escuro);
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--azul-principal);
+}
+
+.service-hub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.service-hub-card {
+    display: block;
+    background: var(--branco);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+    text-decoration: none;
+    color: var(--texto-escuro);
+    transition: all 0.3s ease;
+    border-left: 5px solid var(--azul-principal);
+}
+
+.service-hub-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 102, 204, 0.15);
+    border-left-color: var(--azul-hover);
+}
+
+.service-hub-card h3 {
+    font-size: 1.1rem;
+    color: var(--azul-escuro);
+}
+
+/* ==================== PÁGINA DE ORÇAMENTO ==================== */
+.form-wrapper {
+    padding: 80px 0;
+    background-color: var(--cinza);
+}
+
+.quote-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--branco);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--sombra);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.quote-form .form-group {
+    margin-bottom: 20px;
+}
+
+.quote-form .form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.quote-form .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--azul-escuro);
+}
+
+.quote-form .form-group input,
+.quote-form .form-group select,
+.quote-form .form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #E0E0E0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+#instrumentos-container {
+    display: none;
+    background-color: #f8f9fa;
+    border: 2px solid #E0E0E0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.quote-form .instrument-list {
+    column-count: 2;
+    column-gap: 20px;
+}
+
+.instrument-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+.instrument-item input[type="checkbox"] {
+    flex-shrink: 0;
+    margin: 0 10px 0 0;
+    width: 16px;
+    height: 16px;
+}
+
+.instrument-item label {
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ==================== PÁGINA DE ESCOPOS ==================== */
+.scopes-wrapper {
+    padding: 60px 0;
+}
+
+.search-container {
+    max-width: 850px;
+    margin: 0 auto 40px auto;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    border: 2px solid #E0E0E0;
+    border-radius: 30px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.search-container input:focus {
+    outline: none;
+    border-color: var(--azul-principal);
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+}
+
+.scopes-wrapper .category-block {
+    max-width: 850px;
+    margin: 0 auto 40px auto;
+}
+
+.scopes-wrapper .category-title {
+    font-size: 2rem;
+    color: var(--azul-escuro);
+    border-bottom: 3px solid var(--azul-principal);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.scopes-wrapper .instrument-list {
+    list-style: none;
+    padding-left: 0;
+    column-count: 2;
+    column-gap: 40px;
+}
+
+.scopes-wrapper .instrument-list li {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    color: #555;
+    break-inside: avoid-column;
+}
+
+#no-results-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+    padding: 40px 0;
+    display: none;
+}
+
 /* ==================== RODAPÉ (DESIGN MAIS COMPACTO) ==================== */
 .footer {
     background: var(--azul-escuro);
@@ -1222,7 +1384,8 @@ body {
     gap: 12px; /* Reduzido */
 }
 
-.footer-social-icons a {
+.footer-social-icons a,
+.footer-social-icons .footer-social-icon {
     color: var(--branco);
     background-color: rgba(255, 255, 255, 0.1);
     width: 38px; /* Reduzido */
@@ -1236,7 +1399,8 @@ body {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.footer-social-icons a:hover {
+.footer-social-icons a:hover,
+.footer-social-icons .footer-social-icon:hover {
     background-color: var(--azul-principal);
     transform: translateY(-3px);
 }
@@ -1321,6 +1485,15 @@ body {
     }
     .footer-social-icons {
         justify-content: center;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quote-form .instrument-list,
+    .scopes-wrapper .instrument-list {
+        column-count: 1;
     }
 }
 

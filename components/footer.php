@@ -9,10 +9,10 @@
                     <p class="footer-text">
                         Soluções em calibração e metrologia com qualidade, agilidade e profissionalismo.
                     </p>
-                    <div class="footer-social-icons">
-                        <a href="#" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <div class="footer-social-icons" aria-hidden="true">
+                        <span class="footer-social-icon"><i class="fa-brands fa-facebook-f"></i></span>
+                        <span class="footer-social-icon"><i class="fa-brands fa-instagram"></i></span>
+                        <span class="footer-social-icon"><i class="fa-brands fa-linkedin-in"></i></span>
                     </div>
                 </div>
 
