@@ -42,9 +42,8 @@ function initHeroSlider() {
 
     // Função para mover a "pista" para o slide correto
     function moveToSlide(targetIndex) {
-        // CORREÇÃO PRINCIPAL: Usamos 'vw' (viewport width) em vez de '%'
-        // Isso move a pista em múltiplos da largura da tela.
-        track.style.transform = 'translateX(-' + targetIndex * 100 + 'vw)';
+        const slideWidth = sliderContainer.clientWidth;
+        track.style.transform = 'translateX(-' + targetIndex * slideWidth + 'px)';
         
         // Atualiza a classe 'active' no slide
         slides.forEach(slide => slide.classList.remove('active'));
@@ -103,6 +102,10 @@ function initHeroSlider() {
         resetTimer();
     });
 
+    window.addEventListener('resize', () => {
+        moveToSlide(currentSlide);
+    });
+
     // Inicia o slider
     moveToSlide(0);
     resetTimer();
@@ -120,17 +123,19 @@ function initMobileMenu() {
     hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
+        document.body.classList.toggle('menu-open', navMenu.classList.contains('active'));
     });
 
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             const parent = link.closest('.menu-item-has-mega');
-            if (parent && window.innerWidth <= 768) {
+            if (parent && window.innerWidth <= 992) {
                 e.preventDefault();
                 parent.classList.toggle('active');
             } else {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
             }
         });
     });
@@ -138,15 +143,28 @@ function initMobileMenu() {
     const megaMenuLinks = document.querySelectorAll('.mega-menu-list a');
     megaMenuLinks.forEach(link => {
         link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
+            if (window.innerWidth <= 992) {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
                 const megaMenuItem = document.querySelector('.menu-item-has-mega');
                 if (megaMenuItem) {
                     megaMenuItem.classList.remove('active');
                 }
             }
         });
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 992) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.classList.remove('menu-open');
+
+            document.querySelectorAll('.menu-item-has-mega.active').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
     });
 }
 

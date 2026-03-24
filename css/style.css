@@ -16,6 +16,10 @@ body {
     overflow-x: hidden;
 }
 
+body.menu-open {
+    overflow: hidden;
+}
+
 /* ==================== VARIÁVEIS DE CORES ==================== */
 :root {
     --azul-principal: #0066CC;
@@ -342,7 +346,8 @@ body {
 /* NOVO: Estilo de cada slide */
 /* Bloco corrigido */
 .slide {
-    width: 100vw; /* <--- CORRIGIDO: Agora usa a mesma unidade do JavaScript */
+    width: 100%;
+    min-width: 100%;
     height: 100vh; 
     flex-shrink: 0;
     background-size: cover;
@@ -1122,6 +1127,7 @@ body {
 .page-header-service h1 {
     font-size: 2.8rem;
     font-weight: 700;
+    overflow-wrap: anywhere;
 }
 
 .service-content-wrapper {
@@ -1178,7 +1184,7 @@ body {
 
 .service-hub-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
     gap: 25px;
 }
 
@@ -1207,6 +1213,7 @@ body {
 .service-hub-card h3 {
     font-size: 1.1rem;
     color: var(--azul-escuro);
+    line-height: 1.5;
 }
 
 /* ==================== PÁGINA DE ORÇAMENTO ==================== */
@@ -1718,5 +1725,186 @@ body {
     }
     .servicos-grid, .diferenciais-grid, .clientes-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+img {
+    max-width: 100%;
+}
+
+.hero-title,
+.hero-subtitle,
+.service-hub-section .category-title,
+.mega-menu-title,
+.mega-menu-list a,
+.service-hub-card h3 {
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 992px) {
+    .nav-container {
+        gap: 16px;
+    }
+
+    .logo {
+        flex-shrink: 1;
+        min-width: 0;
+    }
+
+    .logo-img {
+        max-width: 180px;
+        height: auto;
+    }
+
+    .hamburger {
+        flex-shrink: 0;
+        margin-left: auto;
+    }
+
+    .nav-menu {
+        height: 100dvh;
+        justify-content: flex-start;
+        align-items: stretch;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 100px 20px 40px;
+    }
+
+    .nav-menu li {
+        text-align: left;
+    }
+
+    .nav-menu > li > .nav-link {
+        display: block;
+        width: 100%;
+    }
+
+    .menu-item-has-mega > .nav-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .nav-link-cta,
+    .nav-link-cta-secondary {
+        width: 100%;
+        max-width: none;
+        text-align: center;
+    }
+
+    .mega-menu-content {
+        padding: 15px 20px 25px;
+    }
+
+    .mega-menu-list a {
+        white-space: normal;
+        padding: 8px 0;
+    }
+
+    .hero {
+        min-height: calc(100vh - 70px);
+    }
+
+    .slide {
+        min-height: calc(100vh - 70px);
+    }
+
+    .hero-content {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .page-header-service {
+        padding: 120px 0 48px 0;
+    }
+
+    .page-header-service h1 {
+        font-size: clamp(2rem, 8vw, 2.8rem);
+    }
+
+    .service-hub-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 9vw, 2.6rem);
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        padding: 0;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .service-content-wrapper {
+        padding: 60px 0;
+    }
+
+    .service-hub-section .category-title {
+        font-size: 1.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 12px 16px;
+    }
+
+    .logo-img {
+        max-width: 150px;
+    }
+
+    .hero {
+        margin-top: 54px;
+        min-height: calc(100svh - 54px);
+    }
+
+    .slide {
+        min-height: calc(100svh - 54px);
+        padding: 30px 0 80px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.85rem, 10vw, 2.2rem);
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        line-height: 1.5;
+    }
+
+    .page-header-service h1 {
+        font-size: clamp(1.9rem, 10vw, 2.4rem);
+    }
+
+    .service-hub-card {
+        padding: 20px;
+    }
+
+    .service-hub-card h3 {
+        font-size: 1rem;
+    }
+
+    .scroll-top {
+        right: 20px;
+        bottom: 100px;
+    }
+
+    .whatsapp-float {
+        right: 20px;
+        bottom: 30px;
+        width: 56px;
+        height: 56px;
     }
 }
