@@ -1194,6 +1194,10 @@ body {
     border-left: 5px solid var(--azul-principal);
 }
 
+.service-hub-card.is-static {
+    cursor: default;
+}
+
 .service-hub-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 102, 204, 0.15);

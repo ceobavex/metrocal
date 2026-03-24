@@ -1,7 +1,10 @@
 <?php
 // Arquivo: orcamento.php
 // Caminho do include corrigido para ser mais portável
-include '../components/header.php'; 
+include '../components/header.php';
+
+$serviceCategories = metrocal_get_service_categories();
+$serviceOptions = metrocal_get_service_options_by_category();
 ?>
 
 <main>
@@ -35,17 +38,17 @@ include '../components/header.php';
                     <label for="tipoServico">Tipo de Serviço *</label>
                     <select id="tipoServico" required>
                         <option value="">-- Selecione um serviço --</option>
-                        <option value="Calibração">Calibração</option>
-                        <option value="Assistência Técnica">Assistência Técnica</option>
-                        <option value="Qualificação">Qualificação</option>
-                        <option value="Outros">Outros Serviços</option>
+                        <?php foreach ($serviceCategories as $category): ?>
+                            <option value="<?php echo htmlspecialchars($category['title'], ENT_QUOTES, 'UTF-8'); ?>">
+                                <?php echo htmlspecialchars($category['title'], ENT_QUOTES, 'UTF-8'); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
 
                 <div class="form-group full-width" id="instrumentos-container">
-                    <label>Selecione o(s) Instrumento(s)</label>
-                    <div id="instrumentos-list" class="instrument-list">
-                        </div>
+                    <label>Selecione a(s) opção(ões) desejada(s)</label>
+                    <div id="instrumentos-list" class="instrument-list"></div>
                 </div>
 
                 <div class="form-group full-width">
@@ -61,109 +64,58 @@ include '../components/header.php';
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // --- DADOS DOS SERVIÇOS E INSTRUMENTOS ---
-    // ** LISTA COMPLETA E ATUALIZADA DE SERVIÇOS E INSTRUMENTOS **
-    const servicosEInstrumentos = {
-        'Calibração': [
-            'Autoclave',
-            'Balança Analítica',
-            'Calibração de Instrumentos (Geral)',
-            'Câmara Climática',
-            'Centrífuga',
-            'Condutivímetro',
-            'Densímetro',
-            'Densímetro Digital',
-            'Equipamentos de Laboratório (Geral)',
-            'Equipamentos de Medição (Geral)',
-            'Espectrofotômetro',
-            'Espectrofotômetro UV-VIS',
-            'Estufa',
-            'Manômetro',
-            'Medidor de pH',
-            'Micrômetro',
-            'Equipamentos Micronal',
-            'Paquímetro',
-            'pHmetro',
-            'Relógio Comparador',
-            'Termômetro',
-            'Turbidímetro'
-        ],
-        'Assistência Técnica': [
-            'Autoclave (Manutenção e Reparo)',
-            'Estufa (Manutenção e Reparo)',
-            'Espectrofotômetro (Manutenção e Reparo)',
-            'pHmetro (Manutenção e Reparo)',
-            'Fotômetro de Chama (Manutenção e Reparo)',
-            'Equipamentos Micronal (Manutenção e Reparo)',
-            'Equipamentos de Laboratório (Geral)',
-            'Manutenção Preventiva (Plano)'
-        ],
-        'Qualificação': [
-            'Qualificação de Autoclave',
-            'Qualificação de Autoclaves e Estufas',
-            'Qualificação de Equipamentos Binder',
-            'Qualificação de Câmara Climática',
-            'Qualificação de Capela de Fluxo Laminar',
-            'Qualificação de Espectrofotômetro',
-            'Qualificação de Estufas',
-            'Qualificação Térmica (Geral)',
-            'Qualificação Térmica de Autoclave'
-        ],
-        'Outros': [
-            'Treinamentos técnicos',
-            'Consultoria em metrologia',
-            'Aferição de Equipamentos',
-            'Aferição de Instrumentos',
-        ]
-    };
+    const servicosEInstrumentos = <?php echo json_encode($serviceOptions, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;
 
     const servicoSelect = document.getElementById('tipoServico');
     const instrumentosContainer = document.getElementById('instrumentos-container');
     const instrumentosListDiv = document.getElementById('instrumentos-list');
+    const quoteForm = document.getElementById('quoteForm');
 
-    // Função que mostra/esconde a lista de instrumentos
+    function slugify(value) {
+        return value
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, '');
+    }
+
     servicoSelect.addEventListener('change', function() {
         const servicoSelecionado = this.value;
         const instrumentos = servicosEInstrumentos[servicoSelecionado];
 
-        // Limpa a lista anterior
         instrumentosListDiv.innerHTML = '';
 
         if (instrumentos && instrumentos.length > 0) {
-            instrumentos.forEach(instrumento => {
+            instrumentos.forEach((instrumento, index) => {
                 const itemDiv = document.createElement('div');
                 itemDiv.classList.add('instrument-item');
 
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
-                checkbox.id = instrumento.replace(/\s+/g, '-'); // Cria um ID tipo "Calibracao-de-Autoclave"
+                checkbox.id = `opcao-${slugify(servicoSelecionado)}-${slugify(instrumento)}-${index}`;
                 checkbox.name = 'instrumentos';
                 checkbox.value = instrumento;
 
                 const label = document.createElement('label');
                 label.htmlFor = checkbox.id;
                 label.textContent = instrumento;
-                
+
                 itemDiv.appendChild(checkbox);
                 itemDiv.appendChild(label);
                 instrumentosListDiv.appendChild(itemDiv);
             });
-            instrumentosContainer.style.display = 'block'; // Mostra o container
+
+            instrumentosContainer.style.display = 'block';
         } else {
-            instrumentosContainer.style.display = 'none'; // Esconde o container
+            instrumentosContainer.style.display = 'none';
         }
     });
 
-    // --- LÓGICA DE ENVIO PARA O WHATSAPP ---
-    const quoteForm = document.getElementById('quoteForm');
-
     quoteForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Previne o envio padrão do formulário
+        event.preventDefault();
 
-        // ** IMPORTANTE: Substitua pelo seu número de WhatsApp **
-        const numeroWhatsApp = '5561998221318'; // Use o formato: código do país + DDD + número
-
-        // Coleta dos dados do formulário
+        const numeroWhatsApp = '5561998221318';
         const nome = document.getElementById('nome').value;
         const empresa = document.getElementById('empresa').value || 'Não informado';
         const email = document.getElementById('email').value;
@@ -171,15 +123,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const tipoServico = document.getElementById('tipoServico').value;
         const mensagemAdicional = document.getElementById('mensagem').value || 'Nenhuma';
 
-        // Coleta dos instrumentos selecionados (checkboxes)
         const instrumentosSelecionados = [];
         const checkboxes = document.querySelectorAll('input[name="instrumentos"]:checked');
         checkboxes.forEach(checkbox => {
             instrumentosSelecionados.push(checkbox.value);
         });
-        const instrumentosTexto = instrumentosSelecionados.length > 0 ? instrumentosSelecionados.join(', ') : 'Nenhum selecionado';
 
-        // >>> CORREÇÃO: montar mensagem em texto puro e codificar com encodeURIComponent
+        const instrumentosTexto = instrumentosSelecionados.length > 0 ? instrumentosSelecionados.join(', ') : 'Nenhuma selecionada';
         const linhas = [
             '*Nova Solicitação de Orçamento*',
             '',
@@ -189,20 +139,18 @@ document.addEventListener('DOMContentLoaded', function () {
             `*Telefone:* ${telefone}`,
             '',
             `*Tipo de Serviço:* ${tipoServico}`,
-            instrumentosSelecionados.length > 0 ? `*Instrumentos:* ${instrumentosTexto}` : null,
+            instrumentosSelecionados.length > 0 ? `*Opções desejadas:* ${instrumentosTexto}` : null,
             `*Mensagem Adicional:* ${mensagemAdicional}`
         ].filter(Boolean);
 
         const textoCodificado = encodeURIComponent(linhas.join('\n'));
-
-        // >>> CORREÇÃO: usar endpoint api.whatsapp.com/send com phone + text
         const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${textoCodificado}`;
         window.open(urlWhatsApp, '_blank');
     });
 });
 </script>
 
-<?php 
+<?php
 // Caminho do include corrigido para ser mais portável
-include '../components/footer.php'; 
+include '../components/footer.php';
 ?>

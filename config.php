@@ -144,6 +144,211 @@ if (!function_exists('metrocal_normalize_base_url')) {
         return $title;
     }
 
+    function metrocal_slugify($value)
+    {
+        $value = strtr((string) $value, array(
+            'Á' => 'A', 'À' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A',
+            'á' => 'a', 'à' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a',
+            'É' => 'E', 'È' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+            'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e',
+            'Í' => 'I', 'Ì' => 'I', 'Î' => 'I', 'Ï' => 'I',
+            'í' => 'i', 'ì' => 'i', 'î' => 'i', 'ï' => 'i',
+            'Ó' => 'O', 'Ò' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O',
+            'ó' => 'o', 'ò' => 'o', 'ô' => 'o', 'õ' => 'o', 'ö' => 'o',
+            'Ú' => 'U', 'Ù' => 'U', 'Û' => 'U', 'Ü' => 'U',
+            'ú' => 'u', 'ù' => 'u', 'û' => 'u', 'ü' => 'u',
+            'Ç' => 'C', 'ç' => 'c', 'Ñ' => 'N', 'ñ' => 'n',
+        ));
+
+        $value = strtolower($value);
+        $value = preg_replace('/[^a-z0-9]+/', '-', $value);
+
+        return trim((string) $value, '-');
+    }
+
+    function metrocal_get_service_categories()
+    {
+        return array(
+            array(
+                'title' => 'Calibração',
+                'items' => array(
+                    'Autoclaves',
+                    'Estufas',
+                    'Equipamentos laboratoriais',
+                    'Equipamentos elétricos',
+                    'Tempo e frequência',
+                    'Temperatura e umidade',
+                    'Instrumentos dimensionais',
+                    'Massas',
+                    'Pressão',
+                    'Balanças',
+                    'Acústica e ruído',
+                    'Equipamentos hospitalares',
+                ),
+            ),
+            array(
+                'title' => 'Assistência Técnica',
+                'items' => array(
+                    'Equipamentos médicos',
+                    'Estufas',
+                    'Autoclaves',
+                    'Equipamentos laboratoriais',
+                    'Equipamentos oftalmológicos',
+                ),
+            ),
+            array(
+                'title' => 'Qualificação',
+                'items' => array(
+                    'Autoclaves',
+                    'Estufas',
+                    'Câmaras climáticas',
+                    'Térmica em geral',
+                    'Capelas de fluxo laminar',
+                ),
+            ),
+            array(
+                'title' => 'Outros Serviços',
+                'items' => array(
+                    'Treinamentos técnicos',
+                    'Instalação de equipamentos',
+                    'Consultoria em metrologia',
+                    'Treinamentos em equipamentos oftalmológicos',
+                ),
+            ),
+        );
+    }
+
+    function metrocal_get_service_options_by_category()
+    {
+        $options = array();
+
+        foreach (metrocal_get_service_categories() as $category) {
+            $options[$category['title']] = $category['items'];
+        }
+
+        return $options;
+    }
+
+    function metrocal_get_scope_categories()
+    {
+        return array(
+            array(
+                'title' => 'Dimensional',
+                'items' => array(
+                    'Durômetro',
+                    'Relógio comparador digital e analógico',
+                    'Paquímetro',
+                    'Micrômetro',
+                    'Profundímetro',
+                    'Blocos padrões',
+                    'Trenas e réguas',
+                    'Esquadros e níveis',
+                    'Medidores de ângulos',
+                    'Medidores de distância',
+                    'Estação total (Teodolito)',
+                    'Projetor de perfil',
+                ),
+            ),
+            array(
+                'title' => 'Eletricidade, Tempo e Frequência',
+                'items' => array(
+                    'Alicate amperímetro',
+                    'Alicate terrômetro',
+                    'Multímetro',
+                    'Analisador de energia',
+                    'Voltímetro e amperímetro',
+                    'Megômetro',
+                    'Hipot',
+                    'Terrômetro',
+                    'Caixa de resistência',
+                    'Milliohmímetro',
+                    'Microhmímetro',
+                    'Medidor de relação transformação',
+                    'Capacímetro',
+                    'Cronômetro',
+                    'Tacômetro',
+                    'Gerador de frequência',
+                ),
+            ),
+            array(
+                'title' => 'Pressão',
+                'items' => array(
+                    'Manômetros analógicos e digitais',
+                    'Válvulas de segurança',
+                    'Vacuômetros',
+                    'Pressostatos',
+                    'Sensores e controladores de pressão',
+                ),
+            ),
+            array(
+                'title' => 'Temperatura e Umidade',
+                'items' => array(
+                    'Câmaras frias e climáticas',
+                    'Banho maria termostático',
+                    'Freezer e refrigeradores',
+                    'Termômetros em geral',
+                    'Câmeras termográficas',
+                    'Controladores de temperatura',
+                    'Termohigrômetros',
+                    'Medidor de stress térmico',
+                    'Data loggers de temperatura e umidade',
+                ),
+            ),
+            array(
+                'title' => 'Volume, Velocidade do Ar, Fluxo e Detecção de Gases',
+                'items' => array(
+                    'Proveta',
+                    'Pipetas e dispensers',
+                    'Becker',
+                    'Anemômetro',
+                    'Bomba de amostragem',
+                    'Calibrador de bomba de amostragem',
+                    'Detector de gases',
+                    'Regulador de fluxo',
+                ),
+            ),
+            array(
+                'title' => 'Força, Dureza, Massa e Ótica',
+                'items' => array(
+                    'Torquímetro',
+                    'Dinamômetro',
+                    'Esclerômetro',
+                    'Balança',
+                    'Teodolito',
+                    'Níveis a laser',
+                    'Célula de carga',
+                    'Prensa hidráulica',
+                ),
+            ),
+            array(
+                'title' => 'Acústica, Ruído, Frequência e Luminosidade',
+                'items' => array(
+                    'Decibelímetro',
+                    'Dosímetro de ruído',
+                    'Dosímetro de vibração',
+                    'Calibração de dosímetro',
+                    'Audiômetro',
+                    'Cabine de audiometria',
+                    'Frequencímetro',
+                    'Luxímetro',
+                ),
+            ),
+            array(
+                'title' => 'Equipamentos Médicos',
+                'items' => array(
+                    'Desfibrilador',
+                    'Eletroencefalograma (EEG)',
+                    'Eletrocardiograma (ECG)',
+                    'Espirômetro',
+                    'Homogeneizador de tubos e bolsas',
+                    'Holter e mapa',
+                    'Centrífugas',
+                    'Incubadoras',
+                ),
+            ),
+        );
+    }
+
     function metrocal_get_page_meta()
     {
         $pageKey = metrocal_current_page_key();
