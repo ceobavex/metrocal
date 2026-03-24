@@ -166,50 +166,58 @@ if (!function_exists('metrocal_normalize_base_url')) {
         return trim((string) $value, '-');
     }
 
+    function metrocal_service_item($label, $path)
+    {
+        return array(
+            'label' => $label,
+            'url' => BASE_URL . ltrim((string) $path, '/'),
+        );
+    }
+
     function metrocal_get_service_categories()
     {
         return array(
             array(
                 'title' => 'Calibração',
                 'items' => array(
-                    'Calibração de autoclaves',
-                    'Calibração de estufas',
-                    'Calibração de equipamentos laboratoriais',
-                    'Calibração de equipamentos elétricos',
-                    'Calibração de equipamentos de tempo e frequência',
-                    'Calibração de equipamentos de temperatura e umidade',
-                    'Calibração de instrumentos de medição dimensionais',
-                    'Calibração de massas',
-                    'Calibração de pressão',
-                    'Calibração de balanças',
-                    'Calibração de acústica e medição de ruído',
-                    'Calibração de equipamentos hospitalares',
+                    metrocal_service_item('Calibração de autoclaves', 'pages/Calibracao/Calibracao-de-autoclave.php'),
+                    metrocal_service_item('Calibração de estufas', 'pages/Calibracao/Calibracao-de-estufa.php'),
+                    metrocal_service_item('Calibração de equipamentos laboratoriais', 'pages/Calibracao/Calibracao-de-equipamentos-de-laboratorio.php'),
+                    metrocal_service_item('Calibração de equipamentos elétricos', 'pages/Calibracao/Calibracao-de-equipamentos-eletricos.php'),
+                    metrocal_service_item('Calibração de equipamentos de tempo e frequência', 'pages/Calibracao/Calibracao-de-equipamentos-de-tempo-e-frequencia.php'),
+                    metrocal_service_item('Calibração de equipamentos de temperatura e umidade', 'pages/Calibracao/Calibracao-de-equipamentos-de-temperatura-e-umidade.php'),
+                    metrocal_service_item('Calibração de instrumentos de medição dimensionais', 'pages/Calibracao/Calibracao-de-instrumentos-de-medicao-dimensionais.php'),
+                    metrocal_service_item('Calibração de massas', 'pages/Calibracao/Calibracao-de-massas.php'),
+                    metrocal_service_item('Calibração de pressão', 'pages/Calibracao/Calibracao-de-pressao.php'),
+                    metrocal_service_item('Calibração de balanças', 'pages/Calibracao/Calibracao-de-balancas.php'),
+                    metrocal_service_item('Calibração de acústica e medição de ruído', 'pages/Calibracao/Calibracao-de-acustica-e-medicao-de-ruido.php'),
+                    metrocal_service_item('Calibração de equipamentos hospitalares', 'pages/Calibracao/Calibracao-de-equipamentos-hospitalares.php'),
                 ),
             ),
             array(
                 'title' => 'Assistência técnica',
                 'items' => array(
-                    'Manutenção corretiva e preventiva em equipamentos médicos',
-                    'Manutenção corretiva e preventiva em estufas, autoclaves e afins',
-                    'Manutenção corretiva e preventiva em equipamentos laboratoriais',
-                    'Manutenção corretiva e preventiva em equipamentos oftalmológicos',
+                    metrocal_service_item('Manutenção corretiva e preventiva em equipamentos médicos', 'pages/Assistencia-Tecnica/manutencao-corretiva-e-preventiva-em-equipamentos-medicos.php'),
+                    metrocal_service_item('Manutenção corretiva e preventiva em estufas, autoclaves e afins', 'pages/Assistencia-Tecnica/manutencao-corretiva-e-preventiva-em-estufas-autoclaves-e-afins.php'),
+                    metrocal_service_item('Manutenção corretiva e preventiva em equipamentos laboratoriais', 'pages/Assistencia-Tecnica/assistencia-tecnica-equipamentos-laboratorio.php'),
+                    metrocal_service_item('Manutenção corretiva e preventiva em equipamentos oftalmológicos', 'pages/Assistencia-Tecnica/manutencao-corretiva-e-preventiva-em-equipamentos-oftalmologicos.php'),
                 ),
             ),
             array(
                 'title' => 'Qualificação',
                 'items' => array(
-                    'Qualificação de autoclave, estufas e câmaras climáticas',
-                    'Qualificação térmica em geral',
-                    'Qualificação em capelas de fluxo laminar',
+                    metrocal_service_item('Qualificação de autoclave, estufas e câmaras climáticas', 'pages/Qualificacao/qualificacao-de-autoclave-estufas-e-camaras-climaticas.php'),
+                    metrocal_service_item('Qualificação térmica em geral', 'pages/Qualificacao/qualificacao-termica.php'),
+                    metrocal_service_item('Qualificação em capelas de fluxo laminar', 'pages/Qualificacao/qualificacao-capela-fluxo-laminar.php'),
                 ),
             ),
             array(
                 'title' => 'Outros serviços',
                 'items' => array(
-                    'Treinamentos técnicos',
-                    'Instalação de equipamentos',
-                    'Consultoria em metrologia',
-                    'Consultoria e treinamento em equipamentos oftalmológicos',
+                    metrocal_service_item('Treinamentos técnicos', 'pages/Outros/treinamentos-tecnicos.php'),
+                    metrocal_service_item('Instalação de equipamentos', 'pages/Outros/instalacao-de-equipamentos.php'),
+                    metrocal_service_item('Consultoria em metrologia', 'pages/Outros/consultoria-em-metrologia.php'),
+                    metrocal_service_item('Consultoria e treinamento em equipamentos oftalmológicos', 'pages/Outros/consultoria-e-treinamento-em-equipamentos-oftalmologicos.php'),
                 ),
             ),
         );
@@ -220,7 +228,9 @@ if (!function_exists('metrocal_normalize_base_url')) {
         $options = array();
 
         foreach (metrocal_get_service_categories() as $category) {
-            $options[$category['title']] = $category['items'];
+            $options[$category['title']] = array_map(function ($item) {
+                return $item['label'];
+            }, $category['items']);
         }
 
         return $options;

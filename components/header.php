@@ -44,15 +44,13 @@ $serviceCategories = metrocal_get_service_categories();
                         <div class="mega-menu">
                             <div class="mega-menu-content">
                                 <?php foreach ($serviceCategories as $category): ?>
-                                    <?php $categorySlug = metrocal_slugify($category['title']); ?>
                                     <div class="mega-menu-column">
                                         <h4 class="mega-menu-title"><?php echo htmlspecialchars($category['title'], ENT_QUOTES, 'UTF-8'); ?></h4>
                                         <ul class="mega-menu-list">
                                             <?php foreach ($category['items'] as $item): ?>
-                                                <?php $itemAnchor = $categorySlug . '-' . metrocal_slugify($item); ?>
                                                 <li>
-                                                    <a href="<?php echo BASE_URL; ?>pages/servicos.php#<?php echo $itemAnchor; ?>">
-                                                        <?php echo htmlspecialchars($item, ENT_QUOTES, 'UTF-8'); ?>
+                                                    <a href="<?php echo htmlspecialchars($item['url'], ENT_QUOTES, 'UTF-8'); ?>">
+                                                        <?php echo htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8'); ?>
                                                     </a>
                                                 </li>
                                             <?php endforeach; ?>

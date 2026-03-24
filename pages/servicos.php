@@ -20,10 +20,9 @@ $serviceCategories = metrocal_get_service_categories();
                     <h2 class="category-title"><?php echo htmlspecialchars($category['title'], ENT_QUOTES, 'UTF-8'); ?></h2>
                     <div class="service-hub-grid">
                         <?php foreach ($category['items'] as $item): ?>
-                            <?php $itemAnchor = $categorySlug . '-' . metrocal_slugify($item); ?>
-                            <div class="service-hub-card is-static" id="<?php echo $itemAnchor; ?>">
-                                <h3><?php echo htmlspecialchars($item, ENT_QUOTES, 'UTF-8'); ?></h3>
-                            </div>
+                            <a href="<?php echo htmlspecialchars($item['url'], ENT_QUOTES, 'UTF-8'); ?>" class="service-hub-card">
+                                <h3><?php echo htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                            </a>
                         <?php endforeach; ?>
                     </div>
                 </div>
